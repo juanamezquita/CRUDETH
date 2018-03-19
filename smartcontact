@@ -10,15 +10,17 @@ function CRUD_Tendencias() public{
 // nombre='juan';
 }
 
- function setUsuario(uint _documento,string _nombre, string _apellido, string _mail, string _password)public{
+
+ function setUsuario(uint _documento, string _nombre, string _apellido, string _mail, string _password)public{
+          documento = _documento;
           nombre = _nombre;
           apellido = _apellido;
           mail = _mail;
           password = _password;
  }
 
-function getUsernombre(string _nombre) public constant returns(string, string, string) {
-    return (nombre,apellido,mail);
+function getUsernombre() public constant returns(uint,string,string,string) {
+    return (documento,nombre,apellido,mail);
 
 }
 

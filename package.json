@@ -9,6 +9,6 @@
   "author": "Juan C Amézquita",
   "license": "ISC",
   "dependencies": {
-    "web3": "^0.20.6"
+    "web3": "github:ethereum/web3.js"
   }
 }
