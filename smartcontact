@@ -1,0 +1,34 @@
+pragma solidity ^0.4.0;
+contract CRUD_Tendencias {
+uint private documento;
+string private nombre;
+string private apellido;
+string private mail;
+string private password;
+
+function CRUD_Tendencias() public{
+// nombre='juan';
+}
+
+ function setUsuario(uint _documento,string _nombre, string _apellido, string _mail, string _password)public{
+          nombre = _nombre;
+          apellido = _apellido;
+          mail = _mail;
+          password = _password;
+ }
+
+function getUsernombre(string _nombre) public constant returns(string, string, string) {
+    return (nombre,apellido,mail);
+
+}
+
+function getUserapellida(string _apellido) public constant returns(string, string, string) {
+    return (nombre,apellido,mail);}
+
+ function getUsermail(string _mail) public constant returns(string, string, string) {
+    return (nombre,apellido,mail);
+
+}
+
+
+}
