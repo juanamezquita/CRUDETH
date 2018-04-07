@@ -1,0 +1,121 @@
+contract Owned {
+    address owner;
+
+    function Owned() public {
+        owner = msg.sender;
+    }
+
+   modifier onlyOwner {
+       require(msg.sender == owner);
+       _;
+   }
+}
+
+
+
+contract CRUD is Owned{
+
+    struct Usuario{
+        uint documento;
+        bytes32 hashing;
+        bytes32 nombre;
+        bytes32 apellido;
+        bytes32 mail;
+        bytes32 password;
+    }
+   uint count;
+
+   mapping (uint=>Usuario) usuarios;
+   uint [] public usuariosDocs;
+   uint [] public Documentos;
+   bytes32 [] public Hashing;
+   bytes32 [] public Nombre;
+   bytes32 [] public Apellido;
+   bytes32 [] public Mail;
+
+    event UserEvent(
+    uint documento,
+    bytes32 nombre,
+    bytes32 apellido,
+    bytes32 mail,
+    bytes32 hashing
+    );
+
+
+    function setUsuario(uint _documento,bytes32 _nombre, bytes32 _apellido, bytes32 _mail, bytes32 _password, bytes32 _hash, uint op) public{
+     var usuario = usuarios[_documento];
+     usuario.documento = _documento;
+     usuario.nombre=_nombre;
+     usuario.apellido=_apellido;
+     usuario.mail= _mail;
+     usuario.password= _password;
+     usuario.hashing= _hash;
+    if(op==0){
+     count++;
+     usuariosDocs.push(_documento)-1;
+     }
+     UserEvent(_documento,_nombre,_apellido, _mail,_hash );
+    }
+
+function deleteUser(uint _documento) public{
+     delete usuarios[_documento];
+      /*for(uint i=0;i<=usuariosDocs.length;i++){
+          if(usuarios[usuariosDocs[i]].documento==_documento){
+              delete usuariosDocs[i];
+          }
+      }*/
+    count--;
+}
+
+
+  function getUser(uint _address) public constant returns(uint,bytes32,bytes32,bytes32,bytes32) {
+    return (usuarios[_address].documento,usuarios[_address].nombre,usuarios[_address].apellido,usuarios[_address].mail,usuarios[_address].hashing);
+
+}
+
+function getUserName(bytes32 _name) public constant returns(uint[],bytes32[],bytes32[],bytes32[],bytes32[]) {
+  for(uint i=0;i<count;i++){
+   if(usuarios[usuariosDocs[i]].nombre==_name){
+     Documentos.push(usuariosDocs[i])-1;
+     Nombre.push(usuarios[usuariosDocs[i]].nombre)-1;
+     Apellido.push(usuarios[usuariosDocs[i]].apellido)-1;
+     Mail.push(usuarios[usuariosDocs[i]].mail)-1;
+     Hashing.push(usuarios[usuariosDocs[i]].hashing)-1;
+     }
+}
+return (Documentos,Nombre,Apellido,Mail,Hashing);
+}
+
+
+function getUserApellido(bytes32 _apellido) public constant returns(uint[],bytes32[],bytes32[],bytes32[],bytes32[]) {
+  for(uint i=0;i<count;i++){
+   if(usuarios[usuariosDocs[i]].apellido==_apellido){
+     Documentos.push(usuariosDocs[i])-1;
+     Nombre.push(usuarios[usuariosDocs[i]].nombre)-1;
+     Apellido.push(usuarios[usuariosDocs[i]].apellido)-1;
+     Mail.push(usuarios[usuariosDocs[i]].mail)-1;
+     Hashing.push(usuarios[usuariosDocs[i]].hashing)-1;
+     }
+}
+return (Documentos,Nombre,Apellido,Mail,Hashing);
+}
+
+function getUserMail(bytes32 _mail) public constant returns(uint[],bytes32[],bytes32[],bytes32[],bytes32[]) {
+  for(uint i=0;i<count;i++){
+   if(usuarios[usuariosDocs[i]].mail==_mail){
+     Documentos.push(usuariosDocs[i])-1;
+     Nombre.push(usuarios[usuariosDocs[i]].nombre)-1;
+     Apellido.push(usuarios[usuariosDocs[i]].apellido)-1;
+     Mail.push(usuarios[usuariosDocs[i]].mail)-1;
+     Hashing.push(usuarios[usuariosDocs[i]].hashing)-1;
+     }
+}
+return (Documentos,Nombre,Apellido,Mail,Hashing);
+}
+
+function countUsuarios() view public returns (uint) {
+       return count;
+
+    }
+
+}

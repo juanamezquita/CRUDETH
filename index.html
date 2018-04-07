@@ -13,44 +13,93 @@
 </head>
 <body>
     <div class="container">
-
+<header>
         <h1>CRUD ETHEREUM</h1>
+</header>
 
+<nav>
+<ul>
+  <h4>ACTUALIZAR CRUD</h4>
+  <button id="insertar">Insertar Usuario</button>
+  <button id="actualizar">Actualizar Usuario</button>
+  <button id="borrar">Borrar Usuario</button>
+  <button id="consultar_Documento">Consultar x Documento</button>
+  <button id="consultar_Nombre">Consultar x Nombre</button>
+  <button id="consultar_Apellido">Consultar x Apellido</button>
+  <button id="consultar_Mail">Consultar x Mail</button>
+  <span id="countUsuario"></span>
+
+</ul>
+</nav>
+<data>
         <h2 id="Usuario"></h2>
-
+        <span id="usuarioTrans"></span>
         <label for="documento" class="col-lg-2 control-label">Documento</label>
         <input id="documento" type="text">
+
+        <label for="dochash" class="col-lg-2 control-label">Hash del Docmento</label>
+        <input id="dochash" type="text" readonly>
 
         <label for="name" class="col-lg-2 control-label">Nombre</label>
         <input id="name" type="text">
 
-        <label for="name" class="col-lg-2 control-label">Apellido</label>
+        <label for="apellido" class="col-lg-2 control-label">Apellido</label>
         <input id="apellido" type="text">
 
-        <label for="name" class="col-lg-2 control-label">e-mail</label>
+        <label for="mail" class="col-lg-2 control-label">e-mail</label>
         <input id="mail" type="text">
 
-        <label for="name" class="col-lg-2 control-label">contraseña</label>
-        <input id="password" type="text">
+        <label for="password" class="col-lg-2 control-label">contraseña</label>
+        <input id="password" type="password">
 
+        <table>
+          <thead>  <tr>
+                   <th class="warning">Documento</th>
+                   <th class="warning">Nombre</th>
+                   <th class="warning">Apellido</th>
+                   <th class="warning">E-mail</th>
+                    <th class="warning">Hash's Document</th>
+                  </tr>
+          </thead>
+          <tbody id="tbUsuarios">
 
-        <button id="actualizar">Actualizar Usuario</button>
+       </tbody>
+        </table>
 
+        </data>
+<footer>
+  <h3>Universidad Distrital Francisco José de Caldas</h3>
+  <h4>Maestría en Ciencias de la información y las comunicaciones</h4>
+  <h5>Tendencias de software</h5>
+</footer>
 
     </div>
-  <div class="container">
-    <button id="consultar">Consultar</button>
-  </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script>
+    $("#documento").blur(function(){
+      var docvalue = hashCode($("#documento").val());
+$("#dochash").val(docvalue);
+
+function hashCode(s) {
+var h = 0, l = s.length, i = 0;
+if ( l > 0 )
+while (i < l)
+h = (h << 5) - h + s.charCodeAt(i++) | 0;
+return h;
+};
+
+}
+);
+
 
           if (typeof web3 !== 'undefined') {
               web3 = new Web3(web3.currentProvider);
           } else {
               // set the provider you want from Web3.providers
-              web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            //  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:3000"));
+             web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
           }
           web3.eth.defaultAccount = web3.eth.accounts[0];
 
@@ -59,23 +108,156 @@
 		"constant": true,
 		"inputs": [
 			{
-				"name": "_apellido",
-				"type": "string"
+				"name": "",
+				"type": "uint256"
 			}
 		],
-		"name": "getUserapellida",
+		"name": "Hashing",
 		"outputs": [
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "Mail",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "Documentos",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_apellido",
+				"type": "bytes32"
+			}
+		],
+		"name": "getUserApellido",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32[]"
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "bytes32"
+			}
+		],
+		"name": "getUserName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_documento",
+				"type": "uint256"
+			}
+		],
+		"name": "deleteUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "Apellido",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes32"
 			}
 		],
 		"payable": false,
@@ -87,22 +269,49 @@
 		"inputs": [
 			{
 				"name": "_mail",
-				"type": "string"
+				"type": "bytes32"
 			}
 		],
-		"name": "getUsermail",
+		"name": "getUserMail",
 		"outputs": [
 			{
 				"name": "",
-				"type": "string"
+				"type": "uint256[]"
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32[]"
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "",
+				"type": "bytes32[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "usuariosDocs",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -118,19 +327,27 @@
 			},
 			{
 				"name": "_nombre",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"name": "_apellido",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"name": "_mail",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"name": "_password",
-				"type": "string"
+				"type": "bytes32"
+			},
+			{
+				"name": "_hash",
+				"type": "bytes32"
+			},
+			{
+				"name": "op",
+				"type": "uint256"
 			}
 		],
 		"name": "setUsuario",
@@ -141,8 +358,13 @@
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "getUsernombre",
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "uint256"
+			}
+		],
+		"name": "getUser",
 		"outputs": [
 			{
 				"name": "",
@@ -150,15 +372,19 @@
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"name": "",
-				"type": "string"
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "bytes32"
 			}
 		],
 		"payable": false,
@@ -166,10 +392,37 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "Nombre",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
 		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "countUsuarios",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -182,17 +435,22 @@
 			{
 				"indexed": false,
 				"name": "nombre",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"indexed": false,
 				"name": "apellido",
-				"type": "string"
+				"type": "bytes32"
 			},
 			{
 				"indexed": false,
 				"name": "mail",
-				"type": "string"
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "hashing",
+				"type": "bytes32"
 			}
 		],
 		"name": "UserEvent",
@@ -201,28 +459,240 @@
 ]
 )
 
-var Crud = CrudContract.at('0x0dcd2f752394c41875e259e00bb44fd505297caf');
+var Crud = CrudContract.at('0x89e4d5495ec133f2fc29f1235a86cb13d864734f');
   console.log(Crud);
+  console.log(web3.eth.defaultAccount);
 
-$("#actualizar").click(function() {
-//  $("#loader").show();
+
+
+$("#insertar").click(function() {
+ $("#loader").show();
   Crud.setUsuario($("#documento").val(),$("#name").val(), $("#apellido").val(),
-                    $("#mail").val(),$("#password").val());
+                    $("#mail").val(),$("#password").val(),$("#dochash").val(),0,(err,res)=>{ if (err)
+            $("#loader").hide();});
 
     });
 
-  var usuarioEvent = Crud.UserEvent();
+    $("#actualizar").click(function() {
+     $("#loader").show();
+      Crud.setUsuario($("#documento").val(),$("#name").val(), $("#apellido").val(),
+                        $("#mail").val(),$("#password").val(),$("#dochash").val(),1,(err,res)=>{ if (err)
+                $("#loader").hide();});
 
+        });
+
+
+
+      $("#consultar_Documento").click(function() {
+        $("#loader").show();
+         Crud.getUser($("#documento").val(),(err,result)=>{ if (!err)
+                   $("#loader").hide();
+                   $('#tbUsuarios tr').remove();
+                    $.each(result, function( index, value ) {
+                    if(index==0)
+                    $('#tbUsuarios').append('<td>'+value+'</td>' );
+                    else
+                    $('#tbUsuarios').append('<td>'+web3.toAscii(value)+'</td>' );
+                  });
+                });
+           });
+
+
+       $("#consultar_Nombre").click(function() {
+         $("#loader").show();
+          Crud.getUserName($("#name").val(),(err,result)=>{ if (!err)
+                    $("#loader").hide();
+
+                    $('#tbUsuarios tr').remove();
+                    var col1 =[] ;
+                    var col2 =[] ;
+                    var col3 =[] ;
+                    var col4 =[] ;
+                    var col5 =[] ;
+                    $.each(result, function( index, value ) {
+                      if(index==0)
+                          $.each(value,function(a,b){
+                            col1[a]=b;
+                           });
+                      if(index==1)
+                      $.each(value,function(a,b){
+                        col2[a]=b;
+                       });
+                       if(index==2)
+                       $.each(value,function(a,b){
+                         col3[a]=b;
+                        });
+                        if(index==3)
+                        $.each(value,function(a,b){
+                          col4[a]=b;
+                        });
+                        if(index==4)
+                        $.each(value,function(a,b){
+                          col5[a]=b;
+                        });
+                  });
+
+                        for(let i = 0; i < col1.length; i++) {
+                                  $('#tbUsuarios').append('<tr>'+
+                                                            '<td>'+col1[i]+'</td>'+
+                                                            '<td>'+web3.toAscii(col2[i])+'</td>'+
+                                                            '<td>'+web3.toAscii(col3[i])+'</td>'+
+                                                            '<td>'+web3.toAscii(col4[i])+'</td>'+
+                                                            '<td>'+web3.toAscii(col5[i])+'</td>'+
+                                                            '</tr>'
+                                                          );
+                              }
+                  });
+
+            });
+
+
+            $("#consultar_Apellido").click(function() {
+              $("#loader").show();
+               Crud.getUserApellido($("#apellido").val(),(err,result)=>{ if (!err)
+                         $("#loader").hide();
+
+                         $('#tbUsuarios tr').remove();
+                         var col1 =[] ;
+                         var col2 =[] ;
+                         var col3 =[] ;
+                         var col4 =[] ;
+                         var col5 =[] ;
+                         $.each(result, function( index, value ) {
+                           if(index==0)
+                               $.each(value,function(a,b){
+                                 col1[a]=b;
+                                });
+                           if(index==1)
+                           $.each(value,function(a,b){
+                             col2[a]=b;
+                            });
+                            if(index==2)
+                            $.each(value,function(a,b){
+                              col3[a]=b;
+                             });
+                             if(index==3)
+                             $.each(value,function(a,b){
+                               col4[a]=b;
+                             });
+                             if(index==4)
+                             $.each(value,function(a,b){
+                               col5[a]=b;
+                             });
+                       });
+
+                             for(let i = 0; i < col1.length; i++) {
+                                       $('#tbUsuarios').append('<tr>'+
+                                                                 '<td>'+col1[i]+'</td>'+
+                                                                 '<td>'+web3.toAscii(col2[i])+'</td>'+
+                                                                 '<td>'+web3.toAscii(col3[i])+'</td>'+
+                                                                 '<td>'+web3.toAscii(col4[i])+'</td>'+
+                                                                 '<td>'+web3.toAscii(col5[i])+'</td>'+
+                                                                 '</tr>'
+                                                               );
+                                   }
+                       });
+
+                 });
+
+
+                 $("#consultar_Mail").click(function() {
+                   $("#loader").show();
+                    Crud.getUserMail($("#mail").val(),(err,result)=>{ if (!err)
+                              $("#loader").hide();
+
+                              $('#tbUsuarios tr').remove();
+                              var col1 =[] ;
+                              var col2 =[] ;
+                              var col3 =[] ;
+                              var col4 =[] ;
+                              var col5 =[] ;
+                              $.each(result, function( index, value ) {
+                                if(index==0)
+                                    $.each(value,function(a,b){
+                                      col1[a]=b;
+                                     });
+                                if(index==1)
+                                $.each(value,function(a,b){
+                                  col2[a]=b;
+                                 });
+                                 if(index==2)
+                                 $.each(value,function(a,b){
+                                   col3[a]=b;
+                                  });
+                                  if(index==3)
+                                  $.each(value,function(a,b){
+                                    col4[a]=b;
+                                  });
+                                  if(index==4)
+                                  $.each(value,function(a,b){
+                                    col5[a]=b;
+                                  });
+                            });
+
+                                  for(let i = 0; i < col1.length; i++) {
+                                            $('#tbUsuarios').append('<tr>'+
+                                                                      '<td>'+col1[i]+'</td>'+
+                                                                      '<td>'+web3.toAscii(col2[i])+'</td>'+
+                                                                      '<td>'+web3.toAscii(col3[i])+'</td>'+
+                                                                      '<td>'+web3.toAscii(col4[i])+'</td>'+
+                                                                      '<td>'+web3.toAscii(col5[i])+'</td>'+
+                                                                      '</tr>'
+                                                                    );
+                                        }
+                            });
+
+                      });
+
+
+
+
+
+
+
+            $("#borrar").click(function() {
+              $("#loader").show();
+               Crud.deleteUser($("#documento").val(),(err,result)=>{ if (!err)
+                         $("#loader").hide();
+                           });
+
+                 });
+
+
+  var usuarioEvent = Crud.UserEvent({},'latest');
+  var documento;
+  var nombre;
+  var apellido;
+  var mail;
     usuarioEvent.watch(function(error, result){
             if (!error)
-                {
+                { if(result.blockHash !=$("#usuarioTrans").html())
                     $("#loader").hide();
-                    $("#Usuario").html(result.args.documento + " "+result.args.name + " "+result.args.apellido+ " "+result.args.mail);
+                     $("#usuarioTrans").html('Block hash: ' +result.blockHash);
+                     documento = result.args.documento;
+                     $("#Usuario").html(result.args.documento + " "+web3.toAscii(result.args.nombre)+ " "+web3.toAscii(result.args.apellido)+ " "+web3.toAscii(result.args.mail)+" "+result.args.hashing);
+                    console.log(documento);
                 } else {
                     $("#loader").hide();
                     console.log(error);
                 }
-        });
+
+                Crud.countUsuarios((err,res)=>{
+                  if (res)
+                  $("#countUsuario").html(res.c+' Usurios Registrados');
+                });
+
+        }
+
+
+      );
+
+        Crud.countUsuarios((err,res)=>{
+          if (res)
+          $("#countUsuario").html(res.c+' Usurios Registrados');
+        })
+
+
 
       </script>
 
