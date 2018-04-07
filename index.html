@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1>CRUD ETHEREUM</h1>
+
+        <h2 id="Usuario"></h2>
+
+        <label for="documento" class="col-lg-2 control-label">Documento</label>
+        <input id="documento" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Nombre</label>
+        <input id="name" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Apellido</label>
+        <input id="apellido" type="text">
+
+        <label for="name" class="col-lg-2 control-label">e-mail</label>
+        <input id="mail" type="text">
+
+        <label for="name" class="col-lg-2 control-label">contraseña</label>
+        <input id="password" type="text">
+
+
+        <button id="actualizar">Actualizar Usuario</button>
+
+
+    </div>
+  <div class="container">
+    <button id="consultar">Consultar</button>
+  </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+
+          if (typeof web3 !== 'undefined') {
+              web3 = new Web3(web3.currentProvider);
+          } else {
+              // set the provider you want from Web3.providers
+              web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+          }
+          web3.eth.defaultAccount = web3.eth.accounts[0];
+
+          var CrudContract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_apellido",
+				"type": "string"
+			}
+		],
+		"name": "getUserapellida",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_mail",
+				"type": "string"
+			}
+		],
+		"name": "getUsermail",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_documento",
+				"type": "uint256"
+			},
+			{
+				"name": "_nombre",
+				"type": "string"
+			},
+			{
+				"name": "_apellido",
+				"type": "string"
+			},
+			{
+				"name": "_mail",
+				"type": "string"
+			},
+			{
+				"name": "_password",
+				"type": "string"
+			}
+		],
+		"name": "setUsuario",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getUsernombre",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "documento",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "nombre",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "apellido",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "mail",
+				"type": "string"
+			}
+		],
+		"name": "UserEvent",
+		"type": "event"
+	}
+]
+)
+
+var Crud = CrudContract.at('0x0dcd2f752394c41875e259e00bb44fd505297caf');
+  console.log(Crud);
+
+$("#actualizar").click(function() {
+//  $("#loader").show();
+  Crud.setUsuario($("#documento").val(),$("#name").val(), $("#apellido").val(),
+                    $("#mail").val(),$("#password").val());
+
+    });
+
+  var usuarioEvent = Crud.UserEvent();
+
+    usuarioEvent.watch(function(error, result){
+            if (!error)
+                {
+                    $("#loader").hide();
+                    $("#Usuario").html(result.args.documento + " "+result.args.name + " "+result.args.apellido+ " "+result.args.mail);
+                } else {
+                    $("#loader").hide();
+                    console.log(error);
+                }
+        });
+
+      </script>
+
+</body>
+</html>
