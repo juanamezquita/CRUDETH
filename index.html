@@ -38,7 +38,7 @@
         <input id="documento" type="text">
 
         <label for="dochash" class="col-lg-2 control-label">Hash del Docmento</label>
-        <input id="dochash" type="text" readonly>
+        <input id="dochash" type="text"readonly>
 
         <label for="name" class="col-lg-2 control-label">Nombre</label>
         <input id="name" type="text">
@@ -78,16 +78,19 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script>
-    $("#documento").blur(function(){
+  $("#documento").blur(function(){
       var docvalue = hashCode($("#documento").val());
 $("#dochash").val(docvalue);
 
 function hashCode(s) {
-var h = 0, l = s.length, i = 0;
-if ( l > 0 )
-while (i < l)
-h = (h << 5) - h + s.charCodeAt(i++) | 0;
-return h;
+  var hash = 0;
+      for (i = 0; i < s.length; i++) {
+          char = s.charCodeAt(i);
+          hash += char;
+      }
+      return hash+'d';
+
+
 };
 
 }
@@ -459,7 +462,7 @@ return h;
 ]
 )
 
-var Crud = CrudContract.at('0x89e4d5495ec133f2fc29f1235a86cb13d864734f');
+var Crud = CrudContract.at('0xf84521766a4c619d9e0b5e4ceec80e25af5e6942');
   console.log(Crud);
   console.log(web3.eth.defaultAccount);
 
